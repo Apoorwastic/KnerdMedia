@@ -52,12 +52,6 @@ export default function Login() {
           </button>
         </form>
 
-        <div className="mt-4 bg-white rounded-xl p-4 text-xs text-gray-500 space-y-1">
-          <p className="font-medium text-gray-700 mb-2">Demo credentials:</p>
-          <p><span className="font-medium">Super Admin:</span> aarav@knerdmedia.com / admin123</p>
-          <p><span className="font-medium">Admin:</span> priya@knerdmedia.com / admin123</p>
-          <p><span className="font-medium">Member:</span> rohan@knerdmedia.com / member123</p>
-        </div>
       </div>
     </div>
   );
