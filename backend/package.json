@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "build": "tsc",
+    "build": "npx prisma generate && tsc",
     "start": "node dist/index.js",
-    "db:setup": "npx prisma generate && npx prisma db push && npx ts-node src/seed.ts"
+    "db:push": "npx prisma db push",
+    "db:seed": "node dist/seed.js",
+    "db:setup": "npm run build && npm run db:push && npm run db:seed"
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
