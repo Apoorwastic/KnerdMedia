@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { Plus, ArrowLeft, Filter, Repeat, Search } from 'lucide-react';
+import { Plus, ArrowLeft, Repeat, Search } from 'lucide-react';
 import api from '../lib/api';
 import { Task, Client, Section, TaskStatus } from '../types';
 import { StatusBadge, PriorityBadge } from '../components/ui/StatusBadge';
@@ -46,26 +46,25 @@ export default function ClientTasksPage({ section }: { section: Section }) {
   const statusOrder: TaskStatus[] = ['BLOCKED', 'IN_PROGRESS', 'IN_REVIEW', 'TODO', 'DONE'];
   const canAdd = user?.role !== 'MEMBER';
 
-  if (isLoading) return <div className="flex items-center justify-center h-64"><div className="animate-spin w-6 h-6 border-2 border-gray-300 border-t-gray-900 rounded-full" /></div>;
+  if (isLoading) return <div className="flex items-center justify-center h-64"><div className="animate-spin w-6 h-6 border-2 border-[#1e3a5f] border-t-[#00d4c8] rounded-full" /></div>;
 
   return (
     <div className="space-y-5">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate(`/${sectionRoutes[section]}`)} className="p-2 hover:bg-gray-100 rounded-xl transition-colors">
-            <ArrowLeft size={16} className="text-gray-500" />
+          <button onClick={() => navigate(`/${sectionRoutes[section]}`)} className="p-2 hover:bg-[#162032] rounded-xl transition-colors">
+            <ArrowLeft size={16} className="text-[#8fa3b8]" />
           </button>
           <div className="flex items-center gap-2">
             {client && <div className="w-8 h-8 rounded-xl flex items-center justify-center text-white text-sm font-bold" style={{ backgroundColor: client.color }}>{client.name.charAt(0)}</div>}
             <div>
-              <h1 className="text-xl font-bold text-gray-900">{client?.name}</h1>
-              <p className="text-xs text-gray-400 capitalize">{section.toLowerCase()} · {tasks.length} tasks</p>
+              <h1 className="text-xl font-bold text-white">{client?.name}</h1>
+              <p className="text-xs text-[#4a6278] capitalize">{section.toLowerCase()} · {tasks.length} tasks</p>
             </div>
           </div>
         </div>
         {canAdd && (
-          <button onClick={() => setAddOpen(true)} className="flex items-center gap-2 bg-[#1a1a1a] text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors">
+          <button onClick={() => setAddOpen(true)} className="flex items-center gap-2 bg-[#00d4c8] text-[#0a1628] px-4 py-2 rounded-xl text-sm font-bold hover:bg-[#00b8ac] transition-colors">
             <Plus size={15} /> Add task
           </button>
         )}
@@ -74,10 +73,10 @@ export default function ClientTasksPage({ section }: { section: Section }) {
       {/* Filters */}
       <div className="flex items-center gap-3">
         <div className="relative flex-1 max-w-xs">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <input className="w-full border border-gray-200 bg-white rounded-xl pl-8 pr-3 py-2 text-sm" placeholder="Search tasks..." value={search} onChange={e => setSearch(e.target.value)} />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#4a6278]" />
+          <input className="w-full border border-[#1e3a5f] bg-[#0d1f38] text-white placeholder:text-[#4a6278] rounded-xl pl-8 pr-3 py-2 text-sm focus:border-[#00d4c8] focus:outline-none transition-colors" placeholder="Search tasks..." value={search} onChange={e => setSearch(e.target.value)} />
         </div>
-        <select className="border border-gray-200 bg-white rounded-xl px-3 py-2 text-sm" value={statusFilter} onChange={e => setStatusFilter(e.target.value as TaskStatus | '')}>
+        <select className="border border-[#1e3a5f] bg-[#0d1f38] text-white rounded-xl px-3 py-2 text-sm focus:border-[#00d4c8] focus:outline-none" value={statusFilter} onChange={e => setStatusFilter(e.target.value as TaskStatus | '')}>
           <option value="">All statuses</option>
           {(['TODO','IN_PROGRESS','IN_REVIEW','BLOCKED','DONE'] as TaskStatus[]).map(s => <option key={s} value={s}>{s.replace('_',' ')}</option>)}
         </select>
@@ -88,40 +87,40 @@ export default function ClientTasksPage({ section }: { section: Section }) {
         <div key={status}>
           <div className="flex items-center gap-2 mb-2">
             <StatusBadge status={status as TaskStatus} />
-            <span className="text-xs text-gray-400">{grouped[status]?.length}</span>
+            <span className="text-xs text-[#4a6278]">{grouped[status]?.length}</span>
           </div>
-          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div className="bg-[#0d1f38] border border-[#1e3a5f] rounded-2xl overflow-hidden">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-50">
-                  <th className="px-5 py-3 text-left text-xs font-medium text-gray-400">Task</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400">Priority</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400">Assignee</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400">Due date</th>
+                <tr className="border-b border-[#1e3a5f]">
+                  <th className="px-5 py-3 text-left text-xs font-medium text-[#4a6278]">Task</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-[#4a6278]">Priority</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-[#4a6278]">Assignee</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-[#4a6278]">Due date</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-[#1e3a5f]">
                 {grouped[status]?.map((task) => (
-                  <tr key={task.id} className="hover:bg-gray-50 cursor-pointer transition-colors" onClick={() => setSelectedTask(task)}>
+                  <tr key={task.id} className="hover:bg-[#162032] cursor-pointer transition-colors" onClick={() => setSelectedTask(task)}>
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-gray-900">{task.title}</span>
+                        <span className="text-sm font-medium text-white">{task.title}</span>
                         {task.isRecurring && <Repeat size={12} className="text-purple-400" />}
                       </div>
-                      {task.goal && <p className="text-xs text-gray-400 mt-0.5 truncate max-w-sm">{task.goal}</p>}
+                      {task.goal && <p className="text-xs text-[#4a6278] mt-0.5 truncate max-w-sm">{task.goal}</p>}
                     </td>
                     <td className="px-4 py-3.5"><PriorityBadge priority={task.priority} /></td>
                     <td className="px-4 py-3.5">
                       {task.assignees?.length > 0 ? (
                         <div className="flex items-center gap-1.5">
                           {task.assignees.slice(0, 3).map(a => (
-                            <div key={a.id} title={a.user.name} className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium">{a.user.name.charAt(0)}</div>
+                            <div key={a.id} title={a.user.name} className="w-6 h-6 rounded-full bg-[#162032] border border-[#1e3a5f] flex items-center justify-center text-xs font-medium text-white">{a.user.name.charAt(0)}</div>
                           ))}
-                          {task.assignees.length > 3 && <span className="text-xs text-gray-400">+{task.assignees.length - 3}</span>}
+                          {task.assignees.length > 3 && <span className="text-xs text-[#4a6278]">+{task.assignees.length - 3}</span>}
                         </div>
-                      ) : <span className="text-sm text-gray-400">Unassigned</span>}
+                      ) : <span className="text-sm text-[#4a6278]">Unassigned</span>}
                     </td>
-                    <td className="px-4 py-3.5 text-sm text-gray-500">{task.dueDate ? format(new Date(task.dueDate), 'MMM d') : '—'}</td>
+                    <td className="px-4 py-3.5 text-sm text-[#8fa3b8]">{task.dueDate ? format(new Date(task.dueDate), 'MMM d') : '—'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -131,9 +130,9 @@ export default function ClientTasksPage({ section }: { section: Section }) {
       ))}
 
       {filtered.length === 0 && (
-        <div className="bg-white rounded-2xl p-12 shadow-sm text-center">
-          <p className="text-gray-400 text-sm">No tasks found.</p>
-          {canAdd && <button onClick={() => setAddOpen(true)} className="mt-3 text-sm text-gray-600 hover:text-gray-900 underline">Add the first task</button>}
+        <div className="bg-[#0d1f38] border border-[#1e3a5f] rounded-2xl p-12 text-center">
+          <p className="text-[#4a6278] text-sm">No tasks found.</p>
+          {canAdd && <button onClick={() => setAddOpen(true)} className="mt-3 text-sm text-[#8fa3b8] hover:text-[#00d4c8] underline transition-colors">Add the first task</button>}
         </div>
       )}
 

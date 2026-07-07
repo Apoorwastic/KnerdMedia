@@ -39,67 +39,67 @@ export default function Settings() {
 
   return (
     <div className="max-w-md">
-      <h1 className="text-xl font-semibold text-gray-900 mb-6">Settings</h1>
+      <h1 className="text-xl font-semibold text-white mb-6">Settings</h1>
 
-      <div className="bg-white rounded-2xl p-6 shadow-sm">
+      <div className="bg-[#0d1f38] border border-[#1e3a5f] rounded-2xl p-6">
         <div className="flex items-center gap-3 mb-5">
-          <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
-            <KeyRound size={16} className="text-gray-600" />
+          <div className="w-8 h-8 bg-[#162032] rounded-lg flex items-center justify-center">
+            <KeyRound size={16} className="text-[#00d4c8]" />
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-900">Change Password</p>
-            <p className="text-xs text-gray-400">Update your account password</p>
+            <p className="text-sm font-medium text-white">Change Password</p>
+            <p className="text-xs text-[#4a6278]">Update your account password</p>
           </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {error && <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>}
+          {error && <p className="text-sm text-red-400 bg-red-900/20 rounded-lg px-3 py-2">{error}</p>}
           {success && (
-            <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 rounded-lg px-3 py-2">
+            <div className="flex items-center gap-2 text-sm text-green-400 bg-green-900/20 rounded-lg px-3 py-2">
               <Check size={15} /> Password changed successfully
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Current Password</label>
+            <label className="block text-sm font-medium text-gray-200 mb-1.5">Current Password</label>
             <input
               type="password"
               value={form.currentPassword}
               onChange={e => setForm(f => ({ ...f, currentPassword: e.target.value }))}
               required
               placeholder="••••••••"
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-gray-400 focus:outline-none transition-colors"
+              className="w-full border border-[#1e3a5f] bg-[#162032] text-white placeholder:text-[#4a6278] rounded-xl px-4 py-2.5 text-sm focus:border-[#00d4c8] focus:outline-none transition-colors"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">New Password</label>
+            <label className="block text-sm font-medium text-gray-200 mb-1.5">New Password</label>
             <input
               type="password"
               value={form.newPassword}
               onChange={e => setForm(f => ({ ...f, newPassword: e.target.value }))}
               required
               placeholder="••••••••"
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-gray-400 focus:outline-none transition-colors"
+              className="w-full border border-[#1e3a5f] bg-[#162032] text-white placeholder:text-[#4a6278] rounded-xl px-4 py-2.5 text-sm focus:border-[#00d4c8] focus:outline-none transition-colors"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Confirm New Password</label>
+            <label className="block text-sm font-medium text-gray-200 mb-1.5">Confirm New Password</label>
             <input
               type="password"
               value={form.confirmPassword}
               onChange={e => setForm(f => ({ ...f, confirmPassword: e.target.value }))}
               required
               placeholder="••••••••"
-              className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-gray-400 focus:outline-none transition-colors"
+              className="w-full border border-[#1e3a5f] bg-[#162032] text-white placeholder:text-[#4a6278] rounded-xl px-4 py-2.5 text-sm focus:border-[#00d4c8] focus:outline-none transition-colors"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#1a1a1a] text-white rounded-xl py-2.5 text-sm font-medium hover:bg-gray-800 disabled:opacity-50 transition-colors mt-1"
+            className="w-full bg-[#00d4c8] text-[#0a1628] rounded-xl py-2.5 text-sm font-bold hover:bg-[#00b8ac] disabled:opacity-50 transition-colors mt-1"
           >
             {loading ? 'Updating...' : 'Update Password'}
           </button>

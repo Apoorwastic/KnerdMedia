@@ -25,41 +25,41 @@ export default function Dashboard() {
     enabled: user?.role === 'SUPER_ADMIN',
   });
 
-  if (isLoading) return <div className="flex items-center justify-center h-64"><div className="animate-spin w-6 h-6 border-2 border-gray-300 border-t-gray-900 rounded-full" /></div>;
+  if (isLoading) return <div className="flex items-center justify-center h-64"><div className="animate-spin w-6 h-6 border-2 border-[#1e3a5f] border-t-[#00d4c8] rounded-full" /></div>;
   if (!data) return null;
 
   const statCards = [
-    { label: 'Ongoing',   value: data.ongoing,   color: 'text-blue-600' },
-    { label: 'In review', value: data.inReview,   color: 'text-amber-700' },
-    { label: 'Blocked',   value: data.blocked,    color: 'text-red-600' },
-    { label: 'Clients',   value: data.clients,    color: 'text-gray-700' },
-    { label: 'Overdue',   value: data.overdue,    color: 'text-red-700' },
+    { label: 'Ongoing',   value: data.ongoing,   color: 'text-blue-400' },
+    { label: 'In review', value: data.inReview,   color: 'text-amber-400' },
+    { label: 'Blocked',   value: data.blocked,    color: 'text-red-400' },
+    { label: 'Clients',   value: data.clients,    color: 'text-[#00d4c8]' },
+    { label: 'Overdue',   value: data.overdue,    color: 'text-red-400' },
   ];
 
   const taskStatusData = [
-    { name: 'To do',       value: data.todo,      color: '#9ca3af' },
+    { name: 'To do',       value: data.todo,      color: '#4a6278' },
     { name: 'In progress', value: data.ongoing,   color: '#3b82f6' },
-    { name: 'In review',   value: data.inReview,  color: '#d97706' },
-    { name: 'Blocked',     value: data.blocked,   color: '#dc2626' },
-    { name: 'Done',        value: data.done,      color: '#16a34a' },
+    { name: 'In review',   value: data.inReview,  color: '#f59e0b' },
+    { name: 'Blocked',     value: data.blocked,   color: '#ef4444' },
+    { name: 'Done',        value: data.done,      color: '#00d4c8' },
   ];
   const totalTasks = taskStatusData.reduce((s, d) => s + d.value, 0) || 1;
 
   const deptData = Object.entries(data.deptCounts || {}).map(([name, value]) => ({ name, value }));
   const maxDept = Math.max(...deptData.map(d => d.value), 1);
-  const deptColors: Record<string, string> = { Performance: '#8b5cf6', Retention: '#10b981', Creatives: '#f43f5e' };
+  const deptColors: Record<string, string> = { Performance: '#00d4c8', Retention: '#34d399', Creatives: '#f472b6' };
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-sm text-gray-500 mt-0.5">{data.clients} active {data.clients === 1 ? 'client' : 'clients'} · Performance first</p>
+          <h1 className="text-2xl font-bold text-white">Dashboard</h1>
+          <p className="text-sm text-[#8fa3b8] mt-0.5">{data.clients} active {data.clients === 1 ? 'client' : 'clients'} · Performance first</p>
         </div>
         {user?.role === 'SUPER_ADMIN' && (
           <button
             onClick={() => setAddProjectOpen(true)}
-            className="flex items-center gap-2 bg-[#1a1a1a] text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors"
+            className="flex items-center gap-2 bg-[#00d4c8] text-[#0a1628] px-4 py-2.5 rounded-xl text-sm font-bold hover:bg-[#00b8ac] transition-colors"
           >
             <Plus size={15} /> Add account
           </button>
@@ -69,8 +69,8 @@ export default function Dashboard() {
       {/* Stat cards */}
       <div className="grid grid-cols-5 gap-3">
         {statCards.map(({ label, value, color }) => (
-          <div key={label} className="bg-white rounded-2xl p-4 shadow-sm">
-            <p className="text-sm text-gray-500">{label}</p>
+          <div key={label} className="bg-[#0d1f38] border border-[#1e3a5f] rounded-2xl p-4">
+            <p className="text-sm text-[#8fa3b8]">{label}</p>
             <p className={`text-3xl font-bold mt-1 ${color}`}>{value}</p>
           </div>
         ))}
@@ -78,13 +78,13 @@ export default function Dashboard() {
 
       {/* Charts */}
       <div className="grid grid-cols-2 gap-4">
-        <div className="bg-white rounded-2xl p-5 shadow-sm">
-          <h3 className="font-semibold text-gray-900 mb-4">Tasks by status</h3>
+        <div className="bg-[#0d1f38] border border-[#1e3a5f] rounded-2xl p-5">
+          <h3 className="font-semibold text-white mb-4">Tasks by status</h3>
           <div className="space-y-2.5">
             {taskStatusData.map(({ name, value, color }) => (
               <div key={name} className="flex items-center gap-3">
-                <span className="text-sm text-gray-600 w-24 flex-shrink-0">{name}</span>
-                <div className="flex-1 bg-gray-100 rounded-full h-7 relative overflow-hidden">
+                <span className="text-sm text-[#8fa3b8] w-24 flex-shrink-0">{name}</span>
+                <div className="flex-1 bg-[#162032] rounded-full h-7 relative overflow-hidden">
                   <div className="h-full rounded-full flex items-center justify-end pr-2 transition-all" style={{ width: `${Math.max((value / totalTasks) * 100, 5)}%`, backgroundColor: color }}>
                     <span className="text-white text-xs font-medium">{value}</span>
                   </div>
@@ -94,17 +94,17 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-5 shadow-sm">
-          <h3 className="font-semibold text-gray-900 mb-4">Workload by department</h3>
+        <div className="bg-[#0d1f38] border border-[#1e3a5f] rounded-2xl p-5">
+          <h3 className="font-semibold text-white mb-4">Workload by department</h3>
           <div className="space-y-3">
-            {deptData.length === 0 && <p className="text-sm text-gray-400">No data yet</p>}
+            {deptData.length === 0 && <p className="text-sm text-[#4a6278]">No data yet</p>}
             {deptData.map(({ name, value }) => (
               <div key={name} className="flex items-center gap-3">
-                <span className="text-sm text-gray-600 w-28 flex-shrink-0">{name}</span>
-                <div className="flex-1 bg-gray-100 rounded-full h-6 overflow-hidden">
-                  <div className="h-full rounded-full" style={{ width: `${(value / maxDept) * 100}%`, backgroundColor: deptColors[name] || '#6b7280' }} />
+                <span className="text-sm text-[#8fa3b8] w-28 flex-shrink-0">{name}</span>
+                <div className="flex-1 bg-[#162032] rounded-full h-6 overflow-hidden">
+                  <div className="h-full rounded-full" style={{ width: `${(value / maxDept) * 100}%`, backgroundColor: deptColors[name] || '#4a6278' }} />
                 </div>
-                <span className="text-sm font-medium text-gray-700 w-4">{value}</span>
+                <span className="text-sm font-medium text-gray-200 w-4">{value}</span>
               </div>
             ))}
           </div>
@@ -112,20 +112,20 @@ export default function Dashboard() {
       </div>
 
       {/* Upcoming deadlines */}
-      <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-        <div className="px-5 py-4 border-b border-gray-100">
-          <h3 className="font-semibold text-gray-900">Upcoming deadlines</h3>
+      <div className="bg-[#0d1f38] border border-[#1e3a5f] rounded-2xl overflow-hidden">
+        <div className="px-5 py-4 border-b border-[#1e3a5f]">
+          <h3 className="font-semibold text-white">Upcoming deadlines</h3>
         </div>
         <table className="w-full">
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-[#1e3a5f]">
             {data.upcoming?.slice(0, 8).map((task) => (
-              <tr key={task.id} className="hover:bg-gray-50 transition-colors">
+              <tr key={task.id} className="hover:bg-[#162032] transition-colors">
                 <td className="px-5 py-3.5">
-                  <p className="text-sm font-medium text-gray-900">{task.title}</p>
-                  <p className="text-xs text-gray-400">{task.client?.name} · {task.section?.charAt(0) + task.section?.slice(1).toLowerCase()}</p>
+                  <p className="text-sm font-medium text-white">{task.title}</p>
+                  <p className="text-xs text-[#4a6278]">{task.client?.name} · {task.section?.charAt(0) + task.section?.slice(1).toLowerCase()}</p>
                 </td>
                 <td className="px-4 py-3.5"><StatusBadge status={task.status} /></td>
-                <td className="px-4 py-3.5 text-sm text-gray-600 text-right pr-5">
+                <td className="px-4 py-3.5 text-sm text-[#8fa3b8] text-right pr-5">
                   {task.dueDate ? format(new Date(task.dueDate), 'MMM d') : '—'}
                 </td>
               </tr>
@@ -133,40 +133,40 @@ export default function Dashboard() {
           </tbody>
         </table>
         {(!data.upcoming || data.upcoming.length === 0) && (
-          <div className="px-5 py-8 text-center text-sm text-gray-400">No upcoming deadlines</div>
+          <div className="px-5 py-8 text-center text-sm text-[#4a6278]">No upcoming deadlines</div>
         )}
       </div>
 
-      {/* Projects section — Super Admin only */}
+      {/* Accounts — Super Admin only */}
       {user?.role === 'SUPER_ADMIN' && (
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-          <div className="px-5 py-4 border-b border-gray-100 flex items-center justify-between">
-            <h3 className="font-semibold text-gray-900 flex items-center gap-2">
-              <Briefcase size={15} className="text-gray-500" /> Accounts
+        <div className="bg-[#0d1f38] border border-[#1e3a5f] rounded-2xl overflow-hidden">
+          <div className="px-5 py-4 border-b border-[#1e3a5f] flex items-center justify-between">
+            <h3 className="font-semibold text-white flex items-center gap-2">
+              <Briefcase size={15} className="text-[#8fa3b8]" /> Accounts
             </h3>
-            <button onClick={() => navigate('/accounts')} className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900 transition-colors">
+            <button onClick={() => navigate('/accounts')} className="flex items-center gap-1 text-sm text-[#8fa3b8] hover:text-[#00d4c8] transition-colors">
               View all <ArrowRight size={14} />
             </button>
           </div>
           <div className="p-5">
             {clients.length === 0 ? (
-              <p className="text-sm text-gray-400">No projects yet.</p>
+              <p className="text-sm text-[#4a6278]">No accounts yet.</p>
             ) : (
               <div className="grid grid-cols-4 gap-3">
                 {clients.slice(0, 8).map(c => (
                   <button key={c.id} onClick={() => navigate(`/accounts/${c.id}`)}
-                    className="flex items-center gap-3 p-3 rounded-xl border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-all text-left group">
+                    className="flex items-center gap-3 p-3 rounded-xl border border-[#1e3a5f] hover:border-[#00d4c8]/40 hover:bg-[#162032] transition-all text-left group">
                     <div className="w-8 h-8 rounded-lg flex items-center justify-center text-white text-sm font-bold flex-shrink-0" style={{ backgroundColor: c.color }}>
                       {c.name.charAt(0)}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate group-hover:text-gray-700">{c.name}</p>
-                      {c.industry && <p className="text-xs text-gray-400 truncate">{c.industry}</p>}
+                      <p className="text-sm font-medium text-white truncate">{c.name}</p>
+                      {c.industry && <p className="text-xs text-[#4a6278] truncate">{c.industry}</p>}
                     </div>
                   </button>
                 ))}
                 {clients.length > 8 && (
-                  <button onClick={() => navigate('/accounts')} className="flex items-center justify-center p-3 rounded-xl border border-dashed border-gray-200 text-sm text-gray-400 hover:text-gray-600 hover:border-gray-300 transition-all">
+                  <button onClick={() => navigate('/accounts')} className="flex items-center justify-center p-3 rounded-xl border border-dashed border-[#1e3a5f] text-sm text-[#4a6278] hover:text-[#00d4c8] hover:border-[#00d4c8]/40 transition-all">
                     +{clients.length - 8} more
                   </button>
                 )}

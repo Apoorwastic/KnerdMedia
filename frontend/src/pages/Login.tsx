@@ -27,31 +27,51 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f0f0eb] flex items-center justify-center p-4">
-      <div className="w-full max-w-sm">
+    <div className="min-h-screen bg-[#0a1628] flex items-center justify-center p-4">
+      {/* Subtle cyan glow at bottom */}
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-96 h-64 bg-[#00d4c8] opacity-10 blur-3xl rounded-full pointer-events-none" />
+
+      <div className="w-full max-w-sm relative z-10">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 bg-[#1a4a1a] rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Zap size={22} className="text-white" />
+          <div className="w-12 h-12 bg-[#00d4c8] rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <Zap size={22} className="text-[#0a1628]" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Knerd Media</h1>
-          <p className="text-sm text-gray-500 mt-1">Performance first. Scale bigger. Scale faster.</p>
+          <h1 className="text-2xl font-bold text-white">Knerd Media</h1>
+          <p className="text-sm text-[#8fa3b8] mt-1">Performance first. Scale bigger. Scale faster.</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-6 shadow-sm space-y-4">
-          {error && <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>}
+        <form onSubmit={handleSubmit} className="bg-[#0d1f38] border border-[#1e3a5f] rounded-2xl p-6 space-y-4">
+          {error && <p className="text-sm text-red-400 bg-red-900/20 rounded-lg px-3 py-2">{error}</p>}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Email</label>
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@knerd.in" className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-gray-400 transition-colors" />
+            <label className="block text-sm font-medium text-gray-200 mb-1.5">Email</label>
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              placeholder="you@knerd.in"
+              className="w-full border border-[#1e3a5f] bg-[#162032] text-white placeholder:text-[#4a6278] rounded-xl px-4 py-2.5 text-sm focus:border-[#00d4c8] transition-colors"
+            />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">Password</label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="••••••••" className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-gray-400 transition-colors" />
+            <label className="block text-sm font-medium text-gray-200 mb-1.5">Password</label>
+            <input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+              placeholder="••••••••"
+              className="w-full border border-[#1e3a5f] bg-[#162032] text-white placeholder:text-[#4a6278] rounded-xl px-4 py-2.5 text-sm focus:border-[#00d4c8] transition-colors"
+            />
           </div>
-          <button type="submit" disabled={loading} className="w-full bg-[#1a1a1a] text-white rounded-xl py-2.5 text-sm font-medium hover:bg-gray-800 disabled:opacity-50 transition-colors mt-2">
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-[#00d4c8] text-[#0a1628] rounded-xl py-2.5 text-sm font-bold hover:bg-[#00b8ac] disabled:opacity-50 transition-colors mt-2"
+          >
             {loading ? 'Signing in...' : 'Sign in'}
           </button>
         </form>
-
       </div>
     </div>
   );

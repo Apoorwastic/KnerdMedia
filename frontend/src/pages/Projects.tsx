@@ -8,9 +8,9 @@ import AddProjectModal from '../components/AddProjectModal';
 
 const SECTION_LABELS: Record<Section, string> = { PERFORMANCE: 'Performance', RETENTION: 'Retention', CREATIVES: 'Creatives' };
 const SECTION_COLORS: Record<Section, string> = {
-  PERFORMANCE: 'bg-blue-100 text-blue-700',
-  RETENTION:   'bg-emerald-100 text-emerald-700',
-  CREATIVES:   'bg-pink-100 text-pink-700',
+  PERFORMANCE: 'bg-blue-900/30 text-blue-300',
+  RETENTION:   'bg-emerald-900/30 text-emerald-300',
+  CREATIVES:   'bg-pink-900/30 text-pink-300',
 };
 
 export default function Projects() {
@@ -24,7 +24,7 @@ export default function Projects() {
 
   if (isLoading) return (
     <div className="flex items-center justify-center h-64">
-      <div className="animate-spin w-6 h-6 border-2 border-gray-300 border-t-gray-900 rounded-full" />
+      <div className="animate-spin w-6 h-6 border-2 border-[#1e3a5f] border-t-[#00d4c8] rounded-full" />
     </div>
   );
 
@@ -32,21 +32,21 @@ export default function Projects() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Accounts</h1>
-          <p className="text-sm text-gray-500 mt-0.5">{clients.length} account{clients.length !== 1 ? 's' : ''} total</p>
+          <h1 className="text-2xl font-bold text-white">Accounts</h1>
+          <p className="text-sm text-[#8fa3b8] mt-0.5">{clients.length} account{clients.length !== 1 ? 's' : ''} total</p>
         </div>
         <button
           onClick={() => setAddOpen(true)}
-          className="flex items-center gap-2 bg-[#1a1a1a] text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors"
+          className="flex items-center gap-2 bg-[#00d4c8] text-[#0a1628] px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-[#00b8ac] transition-colors"
         >
           <Plus size={15} /> Add account
         </button>
       </div>
 
       {clients.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-64 bg-white rounded-2xl border border-dashed border-gray-200">
-          <p className="text-gray-400 text-sm mb-3">No accounts yet</p>
-          <button onClick={() => setAddOpen(true)} className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 border border-gray-200 px-4 py-2 rounded-xl hover:bg-gray-50">
+        <div className="flex flex-col items-center justify-center h-64 bg-[#0d1f38] rounded-2xl border border-dashed border-[#1e3a5f]">
+          <p className="text-[#4a6278] text-sm mb-3">No accounts yet</p>
+          <button onClick={() => setAddOpen(true)} className="flex items-center gap-2 text-sm font-medium text-gray-300 hover:text-white border border-[#1e3a5f] px-4 py-2 rounded-xl hover:bg-[#162032]">
             <Plus size={14} /> Add first account
           </button>
         </div>
@@ -69,7 +69,7 @@ function AccountCard({ client, onClick }: { client: Client; onClick: () => void 
   return (
     <button
       onClick={onClick}
-      className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-all text-left overflow-hidden group"
+      className="bg-[#0d1f38] rounded-2xl shadow-sm hover:shadow-md hover:bg-[#162032] transition-all text-left overflow-hidden group border border-[#1e3a5f]"
     >
       {/* Color bar */}
       <div className="h-2 w-full" style={{ backgroundColor: client.color }} />
@@ -81,15 +81,15 @@ function AccountCard({ client, onClick }: { client: Client; onClick: () => void 
             {client.name.charAt(0).toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-gray-900 truncate group-hover:text-gray-700">{client.name}</h3>
-            {client.industry && <p className="text-xs text-gray-400 mt-0.5">{client.industry}</p>}
+            <h3 className="font-semibold text-white truncate">{client.name}</h3>
+            {client.industry && <p className="text-xs text-[#4a6278] mt-0.5">{client.industry}</p>}
           </div>
-          <ExternalLink size={14} className="text-gray-300 group-hover:text-gray-500 flex-shrink-0 mt-0.5 transition-colors" />
+          <ExternalLink size={14} className="text-[#4a6278] group-hover:text-[#8fa3b8] flex-shrink-0 mt-0.5 transition-colors" />
         </div>
 
         {/* Description */}
         {client.description && (
-          <p className="text-sm text-gray-500 line-clamp-2 leading-relaxed">{client.description}</p>
+          <p className="text-sm text-[#8fa3b8] line-clamp-2 leading-relaxed">{client.description}</p>
         )}
 
         {/* Sections */}
@@ -104,7 +104,7 @@ function AccountCard({ client, onClick }: { client: Client; onClick: () => void 
         )}
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-1 border-t border-gray-50 text-xs text-gray-400">
+        <div className="flex items-center justify-between pt-1 border-t border-[#1e3a5f] text-xs text-[#4a6278]">
           <span className="flex items-center gap-1">
             <Users size={11} /> {client.members.length} member{client.members.length !== 1 ? 's' : ''}
           </span>

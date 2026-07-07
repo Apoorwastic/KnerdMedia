@@ -1,25 +1,25 @@
 import { TaskStatus, Priority, EventType } from '../../types';
 
 const statusConfig: Record<string, { label: string; className: string }> = {
-  TODO: { label: 'To do', className: 'bg-gray-100 text-gray-600' },
-  IN_PROGRESS: { label: 'In progress', className: 'bg-blue-100 text-blue-700' },
-  IN_REVIEW: { label: 'In review', className: 'bg-amber-100 text-amber-800' },
-  BLOCKED: { label: 'Blocked', className: 'bg-red-100 text-red-700' },
-  DONE: { label: 'Done', className: 'bg-green-100 text-green-700' },
+  TODO: { label: 'To do', className: 'bg-[#162032] text-[#8fa3b8]' },
+  IN_PROGRESS: { label: 'In progress', className: 'bg-blue-900/30 text-blue-400' },
+  IN_REVIEW: { label: 'In review', className: 'bg-amber-900/30 text-amber-400' },
+  BLOCKED: { label: 'Blocked', className: 'bg-red-900/30 text-red-400' },
+  DONE: { label: 'Done', className: 'bg-[#00d4c8]/10 text-[#00d4c8]' },
 };
 
 const priorityConfig: Record<string, { label: string; className: string }> = {
-  LOW: { label: 'Low', className: 'bg-gray-100 text-gray-500' },
-  MEDIUM: { label: 'Medium', className: 'bg-amber-50 text-amber-700' },
-  HIGH: { label: 'High', className: 'bg-orange-100 text-orange-700' },
-  URGENT: { label: 'Urgent', className: 'bg-pink-100 text-pink-700' },
+  LOW: { label: 'Low', className: 'bg-[#162032] text-[#4a6278]' },
+  MEDIUM: { label: 'Medium', className: 'bg-amber-900/20 text-amber-400' },
+  HIGH: { label: 'High', className: 'bg-orange-900/20 text-orange-400' },
+  URGENT: { label: 'Urgent', className: 'bg-pink-900/20 text-pink-400' },
 };
 
 const eventTypeConfig: Record<string, { label: string; className: string }> = {
-  CLIENT_CALL: { label: 'Client call', className: 'bg-blue-100 text-blue-700' },
-  INTERNAL: { label: 'Internal', className: 'bg-purple-100 text-purple-700' },
-  LAUNCH: { label: 'Launch', className: 'bg-green-100 text-green-700' },
-  REMINDER: { label: 'Reminder', className: 'bg-gray-100 text-gray-600' },
+  CLIENT_CALL: { label: 'Client call', className: 'bg-blue-900/30 text-blue-400' },
+  INTERNAL: { label: 'Internal', className: 'bg-purple-900/30 text-purple-400' },
+  LAUNCH: { label: 'Launch', className: 'bg-[#00d4c8]/10 text-[#00d4c8]' },
+  REMINDER: { label: 'Reminder', className: 'bg-[#162032] text-[#8fa3b8]' },
 };
 
 export function StatusBadge({ status }: { status: TaskStatus }) {

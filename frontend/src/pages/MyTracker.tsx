@@ -12,8 +12,8 @@ type View = 'Daily' | 'Weekly' | 'Calendar';
 const STATUS_OPTIONS = ['In prog', 'Done', 'Blocked'];
 
 const EVENT_COLORS: Record<string, string> = {
-  EVENT:   'bg-blue-100 text-blue-700 border-blue-200',
-  MEETING: 'bg-purple-100 text-purple-700 border-purple-200',
+  EVENT:   'bg-blue-900/20 text-blue-300 border-blue-700/40',
+  MEETING: 'bg-purple-900/20 text-purple-300 border-purple-700/40',
 };
 
 export default function MyTracker() {
@@ -81,12 +81,12 @@ export default function MyTracker() {
   const activeDays = entries.filter(e => isSameMonth(new Date(e.date), currentMonth) && e.tasks.length > 0).length;
 
   const getHeatColor = (hours: number) => {
-    if (hours === 0) return '#f3f4f6';
-    if (hours <= 2) return '#bbf7d0';
-    if (hours <= 4) return '#86efac';
-    if (hours <= 6) return '#4ade80';
-    if (hours <= 8) return '#22c55e';
-    return '#15803d';
+    if (hours === 0) return '#162032';
+    if (hours <= 2) return '#064e3b';
+    if (hours <= 4) return '#065f46';
+    if (hours <= 6) return '#047857';
+    if (hours <= 8) return '#059669';
+    return '#10b981';
   };
 
   const loadEntry = (entry: TimeEntry) => {
@@ -135,15 +135,15 @@ export default function MyTracker() {
     <div className="space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div className="flex bg-white border border-gray-200 rounded-xl p-1 gap-1">
+        <div className="flex bg-[#0d1f38] border border-[#1e3a5f] rounded-xl p-1 gap-1">
           {(['Weekly', 'Daily', 'Calendar'] as View[]).map(v => (
-            <button key={v} onClick={() => setView(v)} className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${view === v ? 'bg-gray-900 text-white' : 'text-gray-600 hover:bg-gray-100'}`}>{v}</button>
+            <button key={v} onClick={() => setView(v)} className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${view === v ? 'bg-[#00d4c8] text-[#0a1628]' : 'text-gray-300 hover:bg-[#162032]'}`}>{v}</button>
           ))}
         </div>
         <button
           onClick={exportToExcel}
           disabled={entries.length === 0}
-          className="flex items-center gap-2 border border-gray-200 bg-white px-4 py-2 rounded-xl text-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="flex items-center gap-2 border border-[#1e3a5f] bg-[#0d1f38] text-gray-200 px-4 py-2 rounded-xl text-sm hover:bg-[#162032] disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
         >
           <Download size={14} /> Export Excel
         </button>
@@ -154,55 +154,55 @@ export default function MyTracker() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <button onClick={() => setCurrentDate(d => subDays(d, 1))} className="p-1.5 hover:bg-gray-100 rounded-lg"><ChevronLeft size={16} /></button>
-              <h2 className="text-xl font-bold">{format(currentDate, 'EEEE, MMMM d, yyyy')}</h2>
-              <button onClick={() => setCurrentDate(d => addDays(d, 1))} className="p-1.5 hover:bg-gray-100 rounded-lg"><ChevronRight size={16} /></button>
+              <button onClick={() => setCurrentDate(d => subDays(d, 1))} className="p-1.5 hover:bg-[#162032] rounded-lg text-gray-300"><ChevronLeft size={16} /></button>
+              <h2 className="text-xl font-bold text-white">{format(currentDate, 'EEEE, MMMM d, yyyy')}</h2>
+              <button onClick={() => setCurrentDate(d => addDays(d, 1))} className="p-1.5 hover:bg-[#162032] rounded-lg text-gray-300"><ChevronRight size={16} /></button>
             </div>
-            <span className="text-sm text-gray-500">Total: {totalHours} hrs</span>
+            <span className="text-sm text-[#8fa3b8]">Total: {totalHours} hrs</span>
           </div>
 
           {/* Task table */}
-          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div className="bg-[#0d1f38] rounded-2xl shadow-sm overflow-hidden">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="px-5 py-3 text-left text-xs font-medium text-gray-400 w-10"><input type="checkbox" className="rounded" /></th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400">Task</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400">Account</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400">Hours</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-400">Status</th>
+                <tr className="border-b border-[#1e3a5f]">
+                  <th className="px-5 py-3 text-left text-xs font-medium text-[#4a6278] w-10"><input type="checkbox" className="rounded" /></th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-[#4a6278]">Task</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-[#4a6278]">Account</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-[#4a6278]">Hours</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-[#4a6278]">Status</th>
                   <th className="w-10" />
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-[#1e3a5f]">
                 {taskRows.map((row, i) => (
                   <tr key={i}>
                     <td className="px-5 py-3"><input type="checkbox" className="rounded" /></td>
                     <td className="px-4 py-2">
-                      <input className="w-full text-sm border-0 focus:ring-0 bg-transparent" placeholder="Task description" value={row.taskName} onChange={e => setTaskRows(rows => rows.map((r, j) => j === i ? { ...r, taskName: e.target.value } : r))} />
+                      <input className="w-full text-sm border-0 focus:ring-0 bg-transparent text-white placeholder:text-[#4a6278]" placeholder="Task description" value={row.taskName} onChange={e => setTaskRows(rows => rows.map((r, j) => j === i ? { ...r, taskName: e.target.value } : r))} />
                     </td>
                     <td className="px-4 py-2">
-                      <select className="text-sm border border-gray-200 rounded-lg px-2 py-1.5" value={row.projectName} onChange={e => setTaskRows(rows => rows.map((r, j) => j === i ? { ...r, projectName: e.target.value } : r))}>
+                      <select className="text-sm border border-[#1e3a5f] bg-[#162032] text-white rounded-lg px-2 py-1.5" value={row.projectName} onChange={e => setTaskRows(rows => rows.map((r, j) => j === i ? { ...r, projectName: e.target.value } : r))}>
                         <option value="">Select account</option>
                         {accountOptions.map(name => <option key={name} value={name}>{name}</option>)}
                       </select>
                     </td>
                     <td className="px-4 py-2">
-                      <input type="number" min="0" max="24" step="0.5" className="w-16 text-sm border border-gray-200 rounded-lg px-2 py-1.5 text-center" value={row.hours} onChange={e => setTaskRows(rows => rows.map((r, j) => j === i ? { ...r, hours: Number(e.target.value) } : r))} />
+                      <input type="number" min="0" max="24" step="0.5" className="w-16 text-sm border border-[#1e3a5f] bg-[#162032] text-white rounded-lg px-2 py-1.5 text-center" value={row.hours} onChange={e => setTaskRows(rows => rows.map((r, j) => j === i ? { ...r, hours: Number(e.target.value) } : r))} />
                     </td>
                     <td className="px-4 py-2">
-                      <select className="text-sm border border-gray-200 rounded-lg px-2 py-1.5" value={row.status} onChange={e => setTaskRows(rows => rows.map((r, j) => j === i ? { ...r, status: e.target.value } : r))}>
+                      <select className="text-sm border border-[#1e3a5f] bg-[#162032] text-white rounded-lg px-2 py-1.5" value={row.status} onChange={e => setTaskRows(rows => rows.map((r, j) => j === i ? { ...r, status: e.target.value } : r))}>
                         {STATUS_OPTIONS.map(s => <option key={s}>{s}</option>)}
                       </select>
                     </td>
                     <td className="px-2 py-2">
-                      {taskRows.length > 1 && <button onClick={() => setTaskRows(rows => rows.filter((_, j) => j !== i))} className="p-1 hover:bg-red-50 rounded text-red-400"><Trash2 size={13} /></button>}
+                      {taskRows.length > 1 && <button onClick={() => setTaskRows(rows => rows.filter((_, j) => j !== i))} className="p-1 hover:bg-red-900/20 rounded text-red-400"><Trash2 size={13} /></button>}
                     </td>
                   </tr>
                 ))}
                 <tr>
                   <td colSpan={6} className="px-5 py-3">
-                    <button onClick={() => setTaskRows(rows => [...rows, { taskName: '', projectName: '', hours: 0, status: 'In prog' }])} className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-600">
+                    <button onClick={() => setTaskRows(rows => [...rows, { taskName: '', projectName: '', hours: 0, status: 'In prog' }])} className="flex items-center gap-2 text-sm text-[#4a6278] hover:text-gray-300">
                       <input type="checkbox" className="rounded opacity-40" readOnly /> Add task
                     </button>
                   </td>
@@ -214,7 +214,7 @@ export default function MyTracker() {
           {/* Today's events & meetings */}
           {getEventsForDate(currentDate).length > 0 && (
             <div>
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Events &amp; meetings today</h3>
+              <h3 className="text-sm font-semibold text-gray-200 mb-2">Events &amp; meetings today</h3>
               <div className="space-y-2">
                 {getEventsForDate(currentDate).map(ev => (
                   <div key={ev.id} className={`flex items-start gap-3 p-3 rounded-xl border ${EVENT_COLORS[ev.type] || EVENT_COLORS.EVENT}`}>
@@ -236,13 +236,13 @@ export default function MyTracker() {
 
           {/* Blockers */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-700 mb-2">Blockers</h3>
-            <textarea className="w-full bg-rose-50 border-0 rounded-2xl px-4 py-3 text-sm resize-none focus:ring-1 focus:ring-gray-200" rows={3} placeholder="Any blockers or impediments today?" value={blockers} onChange={e => setBlockers(e.target.value)} />
+            <h3 className="text-sm font-semibold text-gray-200 mb-2">Blockers</h3>
+            <textarea className="w-full bg-red-900/10 border border-red-900/30 rounded-2xl px-4 py-3 text-sm resize-none focus:ring-1 focus:ring-[#00d4c8] text-white placeholder:text-[#4a6278]" rows={3} placeholder="Any blockers or impediments today?" value={blockers} onChange={e => setBlockers(e.target.value)} />
           </div>
 
           {/* Week at a glance */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-700 mb-3">This week at a glance</h3>
+            <h3 className="text-sm font-semibold text-gray-200 mb-3">This week at a glance</h3>
             <div className="flex gap-2">
               {weekDays.map(d => {
                 const e = getEntryForDate(d);
@@ -251,29 +251,29 @@ export default function MyTracker() {
                 const isCurrent = isSameDay(d, currentDate);
                 return (
                   <button key={d.toISOString()} onClick={() => { setCurrentDate(d); if (e) loadEntry(e); else { setTaskRows([{ taskName: '', projectName: '', hours: 0, status: 'In prog' }]); setBlockers(''); setNotes(''); }}} className="flex-1 flex flex-col items-center gap-1.5">
-                    <div className="w-full h-20 rounded-xl transition-all" style={{ backgroundColor: isCurrent ? '#3b82f6' : getHeatColor(h) }} />
-                    <span className={`text-xs font-medium ${isToday ? 'text-blue-600' : isCurrent ? 'text-blue-500' : 'text-gray-400'}`}>{format(d, 'EEE').slice(0,3)}</span>
+                    <div className="w-full h-20 rounded-xl transition-all" style={{ backgroundColor: isCurrent ? '#00d4c8' : getHeatColor(h) }} />
+                    <span className={`text-xs font-medium ${isToday ? 'text-[#00d4c8]' : isCurrent ? 'text-[#00b8ac]' : 'text-[#4a6278]'}`}>{format(d, 'EEE').slice(0,3)}</span>
                   </button>
                 );
               })}
               <button className="flex-1 flex flex-col items-center gap-1.5">
-                <div className="w-full h-20 rounded-xl bg-gray-100" />
-                <span className="text-xs text-gray-300">Fri</span>
+                <div className="w-full h-20 rounded-xl bg-[#162032]" />
+                <span className="text-xs text-[#4a6278]">Fri</span>
               </button>
             </div>
           </div>
 
           {/* Notes */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-700 mb-2">Notes</h3>
-            <textarea className="w-full bg-white border border-gray-200 rounded-2xl px-4 py-3 text-sm resize-none" rows={3} placeholder="Any notes for today..." value={notes} onChange={e => setNotes(e.target.value)} />
+            <h3 className="text-sm font-semibold text-gray-200 mb-2">Notes</h3>
+            <textarea className="w-full bg-[#162032] border border-[#1e3a5f] rounded-2xl px-4 py-3 text-sm resize-none text-white placeholder:text-[#4a6278]" rows={3} placeholder="Any notes for today..." value={notes} onChange={e => setNotes(e.target.value)} />
           </div>
 
           <div className="flex gap-3">
-            <button onClick={handleSave} disabled={saving} className="flex-1 bg-[#1a1a1a] text-white rounded-xl py-2.5 text-sm font-medium hover:bg-gray-800 disabled:opacity-50">
+            <button onClick={handleSave} disabled={saving} className="flex-1 bg-[#00d4c8] text-[#0a1628] rounded-xl py-2.5 text-sm font-medium hover:bg-[#00b8ac] disabled:opacity-50">
               {saving ? 'Saving...' : 'Save entry'}
             </button>
-            {dailyEntry && <button onClick={() => loadEntry(dailyEntry)} className="px-4 border border-gray-200 rounded-xl text-sm hover:bg-gray-50">Load saved</button>}
+            {dailyEntry && <button onClick={() => loadEntry(dailyEntry)} className="px-4 border border-[#1e3a5f] rounded-xl text-sm text-gray-200 hover:bg-[#162032]">Load saved</button>}
           </div>
         </div>
       )}
@@ -283,11 +283,11 @@ export default function MyTracker() {
         <div className="space-y-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <button onClick={() => setCurrentWeek(w => subWeeks(w, 1))} className="p-1.5 hover:bg-gray-100 rounded-lg"><ChevronLeft size={16} /></button>
-              <h2 className="text-xl font-bold">{format(weekStart, 'MMM d')} – {format(weekEnd, 'MMM d, yyyy')}</h2>
-              <button onClick={() => setCurrentWeek(w => addWeeks(w, 1))} className="p-1.5 hover:bg-gray-100 rounded-lg"><ChevronRight size={16} /></button>
+              <button onClick={() => setCurrentWeek(w => subWeeks(w, 1))} className="p-1.5 hover:bg-[#162032] rounded-lg text-gray-300"><ChevronLeft size={16} /></button>
+              <h2 className="text-xl font-bold text-white">{format(weekStart, 'MMM d')} – {format(weekEnd, 'MMM d, yyyy')}</h2>
+              <button onClick={() => setCurrentWeek(w => addWeeks(w, 1))} className="p-1.5 hover:bg-[#162032] rounded-lg text-gray-300"><ChevronRight size={16} /></button>
             </div>
-            <span className="text-sm text-gray-500">Total: {weekTotal} hrs / 40 expected</span>
+            <span className="text-sm text-[#8fa3b8]">Total: {weekTotal} hrs / 40 expected</span>
           </div>
 
           {/* Day cards */}
@@ -298,12 +298,12 @@ export default function MyTracker() {
               const isToday = isSameDay(d, new Date());
               const summary = [...new Set(e?.tasks?.map(t => t.projectName?.split(' ')[0]).filter(Boolean) || [])].slice(0, 3).join(', ');
               return (
-                <button key={d.toISOString()} onClick={() => { setView('Daily'); setCurrentDate(d); if (e) loadEntry(e); }} className={`bg-white rounded-2xl p-4 text-left transition-all hover:shadow-md ${isToday ? 'ring-2 ring-blue-400' : ''}`}>
+                <button key={d.toISOString()} onClick={() => { setView('Daily'); setCurrentDate(d); if (e) loadEntry(e); }} className={`bg-[#0d1f38] border border-[#1e3a5f] rounded-2xl p-4 text-left transition-all hover:bg-[#162032] ${isToday ? 'ring-2 ring-[#00d4c8]' : ''}`}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className={`text-sm font-semibold ${isToday ? 'text-blue-600' : 'text-gray-700'}`}>{format(d, 'EEE')}</span>
-                    <span className={`text-sm font-bold ${h > 0 ? 'text-green-600' : 'text-gray-400'}`}>{h}h</span>
+                    <span className={`text-sm font-semibold ${isToday ? 'text-[#00d4c8]' : 'text-gray-200'}`}>{format(d, 'EEE')}</span>
+                    <span className={`text-sm font-bold ${h > 0 ? 'text-green-400' : 'text-[#4a6278]'}`}>{h}h</span>
                   </div>
-                  <p className="text-xs text-gray-400 truncate">{summary || 'No entries'}</p>
+                  <p className="text-xs text-[#4a6278] truncate">{summary || 'No entries'}</p>
                 </button>
               );
             })}
@@ -311,16 +311,16 @@ export default function MyTracker() {
 
           {/* Summary */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white rounded-2xl p-5 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-4">Weekly summary</h3>
+            <div className="bg-[#0d1f38] rounded-2xl p-5 shadow-sm">
+              <h3 className="font-semibold text-white mb-4">Weekly summary</h3>
               <div className="space-y-3">
                 <div>
                   <div className="flex justify-between text-sm mb-1">
-                    <span className="text-gray-600">Hours logged</span>
-                    <span className="font-medium">{weekTotal} / 40</span>
+                    <span className="text-gray-300">Hours logged</span>
+                    <span className="font-medium text-white">{weekTotal} / 40</span>
                   </div>
-                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-500 rounded-full" style={{ width: `${Math.min((weekTotal / 40) * 100, 100)}%` }} />
+                  <div className="h-2 bg-[#162032] rounded-full overflow-hidden">
+                    <div className="h-full bg-[#00d4c8] rounded-full" style={{ width: `${Math.min((weekTotal / 40) * 100, 100)}%` }} />
                   </div>
                 </div>
                 {/* account breakdown */}
@@ -330,14 +330,14 @@ export default function MyTracker() {
                   return acc;
                 }, {} as Record<string, number>)).map(([p, h]) => (
                   <div key={p} className="flex justify-between text-sm">
-                    <span className="text-gray-600">{p}</span>
-                    <span className="font-medium">{h}h</span>
+                    <span className="text-gray-300">{p}</span>
+                    <span className="font-medium text-white">{h}h</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div className="bg-white rounded-2xl p-5 shadow-sm">
-              <h3 className="font-semibold text-gray-900 mb-4">Daily breakdown</h3>
+            <div className="bg-[#0d1f38] rounded-2xl p-5 shadow-sm">
+              <h3 className="font-semibold text-white mb-4">Daily breakdown</h3>
               <div className="space-y-2.5">
                 {weekDays.map(d => {
                   const e = getEntryForDate(d);
@@ -345,11 +345,11 @@ export default function MyTracker() {
                   const isToday = isSameDay(d, new Date());
                   return (
                     <div key={d.toISOString()} className="flex items-center gap-3">
-                      <span className={`text-sm w-8 font-medium ${isToday ? 'text-blue-600' : 'text-gray-600'}`}>{format(d, 'EEE')}</span>
-                      <div className="flex-1 h-5 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full rounded-full" style={{ width: `${Math.min((h / 10) * 100, 100)}%`, backgroundColor: '#1a4a1a' }} />
+                      <span className={`text-sm w-8 font-medium ${isToday ? 'text-[#00d4c8]' : 'text-gray-300'}`}>{format(d, 'EEE')}</span>
+                      <div className="flex-1 h-5 bg-[#162032] rounded-full overflow-hidden">
+                        <div className="h-full rounded-full bg-[#00d4c8]" style={{ width: `${Math.min((h / 10) * 100, 100)}%` }} />
                       </div>
-                      <span className="text-sm text-gray-600 w-10 text-right">{h}h</span>
+                      <span className="text-sm text-gray-300 w-10 text-right">{h}h</span>
                     </div>
                   );
                 })}
@@ -364,18 +364,18 @@ export default function MyTracker() {
         <div className="space-y-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <button onClick={() => setCurrentMonth(m => subMonths(m, 1))} className="p-1.5 hover:bg-gray-100 rounded-lg"><ChevronLeft size={16} /></button>
-              <h2 className="text-xl font-bold">{format(currentMonth, 'MMMM yyyy')}</h2>
-              <button onClick={() => setCurrentMonth(m => addMonths(m, 1))} className="p-1.5 hover:bg-gray-100 rounded-lg"><ChevronRight size={16} /></button>
+              <button onClick={() => setCurrentMonth(m => subMonths(m, 1))} className="p-1.5 hover:bg-[#162032] rounded-lg text-gray-300"><ChevronLeft size={16} /></button>
+              <h2 className="text-xl font-bold text-white">{format(currentMonth, 'MMMM yyyy')}</h2>
+              <button onClick={() => setCurrentMonth(m => addMonths(m, 1))} className="p-1.5 hover:bg-[#162032] rounded-lg text-gray-300"><ChevronRight size={16} /></button>
             </div>
-            <span className="text-sm text-gray-500">{calTotal} hrs logged · {activeDays} active days</span>
+            <span className="text-sm text-[#8fa3b8]">{calTotal} hrs logged · {activeDays} active days</span>
           </div>
 
-          <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div className="bg-[#0d1f38] rounded-2xl shadow-sm overflow-hidden">
             {/* Day headers */}
-            <div className="grid grid-cols-7 border-b border-gray-100">
+            <div className="grid grid-cols-7 border-b border-[#1e3a5f]">
               {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map(d => (
-                <div key={d} className="py-3 text-center text-xs font-medium text-gray-400">{d}</div>
+                <div key={d} className="py-3 text-center text-xs font-medium text-[#4a6278]">{d}</div>
               ))}
             </div>
             {/* Calendar grid */}
@@ -387,10 +387,10 @@ export default function MyTracker() {
                 const isToday = isSameDay(d, new Date());
                 const dayEvents = getEventsForDate(d);
                 return (
-                  <button key={i} onClick={() => { if (inMonth) { setView('Daily'); setCurrentDate(d); if (e) loadEntry(e); } }} className={`min-h-[90px] p-2 border-b border-r border-gray-50 text-left transition-colors hover:bg-gray-50 ${!inMonth ? 'opacity-30' : ''}`}>
-                    <div className={`w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full mb-1 ${isToday ? 'bg-blue-600 text-white' : 'text-gray-700'}`}>{format(d, 'd')}</div>
+                  <button key={i} onClick={() => { if (inMonth) { setView('Daily'); setCurrentDate(d); if (e) loadEntry(e); } }} className={`min-h-[90px] p-2 border-b border-r border-[#1e3a5f] text-left transition-colors hover:bg-[#162032] ${!inMonth ? 'opacity-30' : ''}`}>
+                    <div className={`w-7 h-7 flex items-center justify-center text-sm font-medium rounded-full mb-1 ${isToday ? 'bg-[#00d4c8] text-[#0a1628]' : 'text-gray-200'}`}>{format(d, 'd')}</div>
                     {h > 0 && inMonth && (
-                      <span className="text-xs px-1.5 py-0.5 rounded-full block mb-1" style={{ backgroundColor: getHeatColor(h), color: h > 4 ? '#fff' : '#166534' }}>
+                      <span className="text-xs px-1.5 py-0.5 rounded-full block mb-1" style={{ backgroundColor: getHeatColor(h), color: h > 4 ? '#fff' : '#d1fae5' }}>
                         {h}h · {e?.tasks?.length} {e?.tasks?.length === 1 ? 'task' : 'tasks'}
                       </span>
                     )}
@@ -400,7 +400,7 @@ export default function MyTracker() {
                       </span>
                     ))}
                     {inMonth && dayEvents.length > 2 && (
-                      <span className="text-xs text-gray-400">+{dayEvents.length - 2} more</span>
+                      <span className="text-xs text-[#4a6278]">+{dayEvents.length - 2} more</span>
                     )}
                   </button>
                 );
@@ -416,15 +416,15 @@ export default function MyTracker() {
               { label: 'Total tasks', value: entries.filter(e => isSameMonth(new Date(e.date), currentMonth)).flatMap(e => e.tasks).length },
               { label: 'Completed', value: entries.filter(e => isSameMonth(new Date(e.date), currentMonth)).flatMap(e => e.tasks).filter(t => t.status === 'Done').length },
             ].map(({ label, value }) => (
-              <div key={label} className="bg-white rounded-2xl p-4 shadow-sm">
-                <p className="text-sm text-gray-500">{label}</p>
-                <p className="text-3xl font-bold text-gray-900 mt-1">{value}</p>
+              <div key={label} className="bg-[#0d1f38] rounded-2xl p-4 shadow-sm">
+                <p className="text-sm text-[#8fa3b8]">{label}</p>
+                <p className="text-3xl font-bold text-white mt-1">{value}</p>
               </div>
             ))}
           </div>
 
           {/* Heat legend */}
-          <div className="flex items-center gap-2 text-xs text-gray-400">
+          <div className="flex items-center gap-2 text-xs text-[#4a6278]">
             <span>Less</span>
             {[0,2,4,6,8,10].map(h => (
               <div key={h} className="w-4 h-4 rounded" style={{ backgroundColor: getHeatColor(h) }} />
