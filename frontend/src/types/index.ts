@@ -80,11 +80,15 @@ export interface Task {
   priority: Priority;
   type: TaskType;
   time?: string;
+  duration?: number;       // minutes
+  meetLink?: string;       // Google Meet URL
+  calendarEventId?: string;
+  externalEmails?: string; // comma-separated
   creatorId: string;
   dueDate?: string;
   isRecurring: boolean;
   recurringPattern?: RecurringPattern;
-  recurringDays?: string; // "MON,WED,FRI"
+  recurringDays?: string;
   recurringInterval?: number;
   department?: string;
   createdAt: string;

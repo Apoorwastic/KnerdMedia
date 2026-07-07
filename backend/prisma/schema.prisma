@@ -81,6 +81,10 @@ model Task {
   recurringDays     String?   // "MON,WED,FRI"
   recurringInterval Int?
   department        String?
+  duration          Int?      // duration in minutes
+  meetLink          String?   // Google Meet URL
+  calendarEventId   String?   // Google Calendar event ID
+  externalEmails    String?   // comma-separated external attendee emails
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
 
