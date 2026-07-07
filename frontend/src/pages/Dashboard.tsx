@@ -54,7 +54,7 @@ export default function Dashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-sm text-gray-500 mt-0.5">Across {data.clients} active clients today</p>
+          <p className="text-sm text-gray-500 mt-0.5">{data.clients} active {data.clients === 1 ? 'client' : 'clients'} · Performance first</p>
         </div>
         {user?.role === 'SUPER_ADMIN' && (
           <button

@@ -53,7 +53,10 @@ export default function Sidebar() {
           <div className="w-7 h-7 bg-[#1a4a1a] rounded-lg flex items-center justify-center">
             <Zap size={14} className="text-white" />
           </div>
-          <span className="font-semibold text-gray-900 text-sm">Knerd Media</span>
+          <div>
+            <span className="font-semibold text-gray-900 text-sm block leading-tight">Knerd Media</span>
+            <span className="text-[10px] text-gray-400 leading-tight">Performance First</span>
+          </div>
         </div>
       </div>
 
