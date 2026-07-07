@@ -8,7 +8,7 @@
     "build": "npx prisma generate && tsc",
     "start": "node dist/src/index.js",
     "db:push": "npx prisma db push",
-    "db:seed": "node dist/seed.js",
+    "db:seed": "node dist/src/seed.js",
     "db:setup": "npm run build && npm run db:push && npm run db:seed"
   },
   "dependencies": {
