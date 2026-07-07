@@ -60,6 +60,7 @@ export default function AddTaskModal({ open, onClose, clientId, section }: Props
   const [emailDraft, setEmailDraft] = useState('');
   const [emailError, setEmailError] = useState('');
   const [apiError, setApiError] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
 
   const { data: users = [] } = useQuery<User[]>({
     queryKey: ['users'],
@@ -97,7 +98,16 @@ export default function AddTaskModal({ open, onClose, clientId, section }: Props
     setEmailDraft('');
     setEmailError('');
     setApiError(null);
+    setValidationError(null);
     onClose();
+  };
+
+  const handleSubmit = () => {
+    setValidationError(null);
+    setApiError(null);
+    if (!form.title.trim()) { setValidationError('Please enter a title.'); return; }
+    if (isMeeting && !form.dueDate) { setValidationError('Please pick a date for the meeting.'); return; }
+    createTask.mutate();
   };
 
   const addEmail = () => {
@@ -383,16 +393,16 @@ export default function AddTaskModal({ open, onClose, clientId, section }: Props
         )}
 
         {/* Submit */}
-        {apiError && (
+        {(validationError || apiError) && (
           <div className="text-sm text-red-400 bg-red-900/20 border border-red-900/40 rounded-xl px-3 py-2 mt-4">
-            {apiError}
+            {validationError || apiError}
           </div>
         )}
         <div className="flex gap-2 pt-5">
           <button
-            onClick={() => { setApiError(null); createTask.mutate(); }}
-            disabled={!form.title.trim() || (isMeeting && !form.dueDate) || createTask.isPending}
-            className="flex-1 bg-[#00d4c8] text-[#0a1628] rounded-xl py-2.5 text-sm font-bold hover:bg-[#00b8ac] disabled:opacity-50 transition-colors flex items-center justify-center gap-2"
+            onClick={handleSubmit}
+            disabled={createTask.isPending}
+            className="flex-1 bg-[#00d4c8] text-[#0a1628] rounded-xl py-2.5 text-sm font-bold hover:bg-[#00b8ac] disabled:opacity-60 transition-colors flex items-center justify-center gap-2"
           >
             {createTask.isPending ? (
               <><span className="w-4 h-4 border-2 border-[#0a1628]/30 border-t-[#0a1628] rounded-full animate-spin" /> {isMeeting ? 'Creating Meet...' : 'Creating...'}</>
