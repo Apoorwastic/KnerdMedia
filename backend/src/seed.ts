@@ -6,26 +6,28 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('Seeding database...');
 
+  const pw = await bcrypt.hash('12345678', 10);
+
   // Users
   const aarav = await prisma.user.upsert({
-    where: { email: 'manik@knerdmedia.com' }, update: {},
-    create: { name: 'Manik Ratn', email: 'manik@knerdmedia.com', password: await bcrypt.hash('admin123', 10), role: 'SUPER_ADMIN' }
+    where: { email: 'manik@knerdmedia.com' }, update: { password: pw },
+    create: { name: 'Manik Ratn', email: 'manik@knerdmedia.com', password: pw, role: 'SUPER_ADMIN' }
   });
   const priya = await prisma.user.upsert({
-    where: { email: 'priya@knerdmedia.com' }, update: {},
-    create: { name: 'Priya Nair', email: 'priya@knerdmedia.com', password: await bcrypt.hash('admin123', 10), role: 'ADMIN' }
+    where: { email: 'priya@knerdmedia.com' }, update: { password: pw },
+    create: { name: 'Priya Nair', email: 'priya@knerdmedia.com', password: pw, role: 'ADMIN' }
   });
   const rohan = await prisma.user.upsert({
-    where: { email: 'rohan@knerdmedia.com' }, update: {},
-    create: { name: 'Rohan Mehta', email: 'rohan@knerdmedia.com', password: await bcrypt.hash('member123', 10), role: 'MEMBER' }
+    where: { email: 'rohan@knerdmedia.com' }, update: { password: pw },
+    create: { name: 'Rohan Mehta', email: 'rohan@knerdmedia.com', password: pw, role: 'MEMBER' }
   });
   const sara = await prisma.user.upsert({
-    where: { email: 'sara@knerdmedia.com' }, update: {},
-    create: { name: 'Sara Khan', email: 'sara@knerdmedia.com', password: await bcrypt.hash('member123', 10), role: 'MEMBER' }
+    where: { email: 'sara@knerdmedia.com' }, update: { password: pw },
+    create: { name: 'Sara Khan', email: 'sara@knerdmedia.com', password: pw, role: 'MEMBER' }
   });
   const vikram = await prisma.user.upsert({
-    where: { email: 'vikram@knerdmedia.com' }, update: {},
-    create: { name: 'Vikram Rao', email: 'vikram@knerdmedia.com', password: await bcrypt.hash('member123', 10), role: 'MEMBER' }
+    where: { email: 'vikram@knerdmedia.com' }, update: { password: pw },
+    create: { name: 'Vikram Rao', email: 'vikram@knerdmedia.com', password: pw, role: 'MEMBER' }
   });
 
   // Clients with section-level member access
@@ -219,9 +221,11 @@ async function main() {
   }
 
   console.log('Seed complete!');
-  console.log('  Super Admin: aarav@knerdmedia.com / admin123');
-  console.log('  Admin:       priya@knerdmedia.com / admin123');
-  console.log('  Member:      rohan@knerdmedia.com / member123');
+  console.log('  Super Admin: manik@knerdmedia.com / 12345678');
+  console.log('  Admin:       priya@knerdmedia.com / 12345678');
+  console.log('  Member:      rohan@knerdmedia.com / 12345678');
+  console.log('  Member:      sara@knerdmedia.com / 12345678');
+  console.log('  Member:      vikram@knerdmedia.com / 12345678');
 }
 
 main().catch(console.error).finally(() => prisma.$disconnect());

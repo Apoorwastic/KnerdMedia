@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, TrendingUp, RefreshCw, Palette,
-  Calendar, ClipboardList, Users, Shield, LogOut, Zap, ChevronRight
+  Calendar, ClipboardList, Users, Shield, LogOut, Zap, ChevronRight, Settings
 } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
 import { useSidebarStore } from '../../stores/sidebarStore';
@@ -119,6 +119,9 @@ export default function Sidebar() {
             <p className="text-xs font-medium text-gray-900 truncate">{user?.name}</p>
             <p className="text-xs text-gray-400 capitalize">{user?.role?.replace('_', ' ').toLowerCase()}</p>
           </div>
+          <button onClick={() => navigate('/settings')} className="text-gray-400 hover:text-gray-600">
+            <Settings size={14} />
+          </button>
           <button onClick={() => { clearAuth(); navigate('/login'); }} className="text-gray-400 hover:text-gray-600">
             <LogOut size={14} />
           </button>

@@ -13,6 +13,7 @@ import TeamTracker from './pages/TeamTracker';
 import AdminPanel from './pages/AdminPanel';
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
+import Settings from './pages/Settings';
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { token } = useAuthStore();
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="admin" element={<AdminPanel />} />
           <Route path="accounts" element={<Projects />} />
           <Route path="accounts/:id" element={<ProjectDetail />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
