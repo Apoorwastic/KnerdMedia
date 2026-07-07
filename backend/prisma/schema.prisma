@@ -124,8 +124,9 @@ model Event {
   clientId       String?
   date           DateTime
   time           String?
-  reminderBefore Int?
-  createdAt      DateTime @default(now())
+  reminderBefore  Int?
+  calendarEventId String?
+  createdAt       DateTime @default(now())
 
   client Client? @relation(fields: [clientId], references: [id])
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { format, startOfWeek, endOfWeek, addDays, subDays, addWeeks, subWeeks, startOfMonth, endOfMonth, isSameDay, isSameMonth, addMonths, subMonths, eachDayOfInterval } from 'date-fns';
-import { ChevronLeft, ChevronRight, Trash2, Download, CalendarDays, Users } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Trash2, Download, CalendarDays, Users, Video, ExternalLink } from 'lucide-react';
 import * as XLSX from 'xlsx';
 import api from '../lib/api';
 import { TimeEntry, Task, Client } from '../types';
@@ -218,16 +218,27 @@ export default function MyTracker() {
               <div className="space-y-2">
                 {getEventsForDate(currentDate).map(ev => (
                   <div key={ev.id} className={`flex items-start gap-3 p-3 rounded-xl border ${EVENT_COLORS[ev.type] || EVENT_COLORS.EVENT}`}>
-                    <span className="text-base flex-shrink-0">{ev.type === 'MEETING' ? '👥' : '📅'}</span>
+                    <span className="text-base flex-shrink-0">{ev.type === 'MEETING' ? '📹' : '📅'}</span>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">{ev.title}</p>
                       <p className="text-xs opacity-70 mt-0.5">
-                        {ev.time ? ev.time.slice(0, 5) + ' · ' : ''}{ev.client?.name}
-                        {ev.assignees?.length > 1 && ` · ${ev.assignees.length} attendees`}
+                        {ev.time ? ev.time.slice(0, 5) : ''}
+                        {ev.duration ? ` · ${ev.duration >= 60 ? `${ev.duration / 60}h` : `${ev.duration}m`}` : ''}
+                        {ev.client?.name ? ` · ${ev.client.name}` : ''}
+                        {ev.assignees?.length > 1 ? ` · ${ev.assignees.length} attendees` : ''}
                       </p>
                     </div>
-                    {ev.type === 'MEETING' && <Users size={13} className="flex-shrink-0 mt-0.5 opacity-60" />}
-                    {ev.type === 'EVENT' && <CalendarDays size={13} className="flex-shrink-0 mt-0.5 opacity-60" />}
+                    {ev.type === 'MEETING' && ev.meetLink ? (
+                      <a href={ev.meetLink} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 px-2.5 py-1.5 bg-purple-900/40 hover:bg-purple-900/60 rounded-lg text-xs text-purple-300 font-medium transition-colors flex-shrink-0"
+                        onClick={e => e.stopPropagation()}>
+                        <Video size={12} /> Join
+                      </a>
+                    ) : ev.type === 'MEETING' ? (
+                      <Users size={13} className="flex-shrink-0 mt-0.5 opacity-60" />
+                    ) : (
+                      <CalendarDays size={13} className="flex-shrink-0 mt-0.5 opacity-60" />
+                    )}
                   </div>
                 ))}
               </div>
@@ -395,9 +406,18 @@ export default function MyTracker() {
                       </span>
                     )}
                     {inMonth && dayEvents.slice(0, 2).map(ev => (
-                      <span key={ev.id} className={`text-xs px-1.5 py-0.5 rounded-full block truncate border mb-0.5 ${EVENT_COLORS[ev.type] || EVENT_COLORS.EVENT}`}>
-                        {ev.time ? ev.time.slice(0, 5) + ' ' : ''}{ev.title}
-                      </span>
+                      ev.type === 'MEETING' && ev.meetLink ? (
+                        <a key={ev.id} href={ev.meetLink} target="_blank" rel="noopener noreferrer"
+                          onClick={e => e.stopPropagation()}
+                          className={`text-xs px-1.5 py-0.5 rounded-full flex items-center gap-1 truncate border mb-0.5 ${EVENT_COLORS[ev.type]} hover:opacity-80 transition-opacity`}>
+                          <Video size={9} className="flex-shrink-0" />
+                          <span className="truncate">{ev.time ? ev.time.slice(0,5) + ' ' : ''}{ev.title}</span>
+                        </a>
+                      ) : (
+                        <span key={ev.id} className={`text-xs px-1.5 py-0.5 rounded-full block truncate border mb-0.5 ${EVENT_COLORS[ev.type] || EVENT_COLORS.EVENT}`}>
+                          {ev.time ? ev.time.slice(0, 5) + ' ' : ''}{ev.title}
+                        </span>
+                      )
                     ))}
                     {inMonth && dayEvents.length > 2 && (
                       <span className="text-xs text-[#4a6278]">+{dayEvents.length - 2} more</span>
