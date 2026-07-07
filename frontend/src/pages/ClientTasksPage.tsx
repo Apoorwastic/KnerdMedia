@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { Plus, ArrowLeft, Repeat, Search } from 'lucide-react';
+import { Plus, ArrowLeft, Repeat, Search, Video, CalendarDays } from 'lucide-react';
 import api from '../lib/api';
 import { Task, Client, Section, TaskStatus } from '../types';
 import { StatusBadge, PriorityBadge } from '../components/ui/StatusBadge';
@@ -16,7 +16,7 @@ export default function ClientTasksPage({ section }: { section: Section }) {
   const { clientId } = useParams<{ clientId: string }>();
   const navigate = useNavigate();
   const { user } = useAuthStore();
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
   const [addOpen, setAddOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState<TaskStatus | ''>('');
   const [search, setSearch] = useState('');
@@ -29,6 +29,9 @@ export default function ClientTasksPage({ section }: { section: Section }) {
     queryFn: () => api.get('/tasks', { params: { clientId, section } }).then(r => r.data),
     enabled: !!clientId,
   });
+
+  // Always derive from live query so meetLink etc. stay fresh after mutations
+  const selectedTask = selectedTaskId ? (tasks.find(t => t.id === selectedTaskId) ?? null) : null;
 
   const filtered = tasks.filter(t => {
     if (statusFilter && t.status !== statusFilter) return false;
@@ -101,13 +104,25 @@ export default function ClientTasksPage({ section }: { section: Section }) {
               </thead>
               <tbody className="divide-y divide-[#1e3a5f]">
                 {grouped[status]?.map((task) => (
-                  <tr key={task.id} className="hover:bg-[#162032] cursor-pointer transition-colors" onClick={() => setSelectedTask(task)}>
+                  <tr key={task.id} className="hover:bg-[#162032] cursor-pointer transition-colors" onClick={() => setSelectedTaskId(task.id)}>
                     <td className="px-5 py-3.5">
                       <div className="flex items-center gap-2">
+                        {task.type === 'MEETING' && <Video size={13} className="text-purple-400 flex-shrink-0" />}
+                        {task.type === 'EVENT'   && <CalendarDays size={13} className="text-blue-400 flex-shrink-0" />}
                         <span className="text-sm font-medium text-white">{task.title}</span>
                         {task.isRecurring && <Repeat size={12} className="text-purple-400" />}
+                        {task.meetLink && (
+                          <span className="flex items-center gap-1 px-1.5 py-0.5 bg-purple-900/30 rounded-full text-xs text-purple-300">
+                            <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" /> Meet
+                          </span>
+                        )}
                       </div>
                       {task.goal && <p className="text-xs text-[#4a6278] mt-0.5 truncate max-w-sm">{task.goal}</p>}
+                      {task.type === 'MEETING' && task.time && (
+                        <p className="text-xs text-purple-400/70 mt-0.5">
+                          {task.time}{task.duration ? ` · ${task.duration >= 60 ? `${task.duration/60}h` : `${task.duration}m`}` : ''}
+                        </p>
+                      )}
                     </td>
                     <td className="px-4 py-3.5"><PriorityBadge priority={task.priority} /></td>
                     <td className="px-4 py-3.5">
@@ -136,7 +151,7 @@ export default function ClientTasksPage({ section }: { section: Section }) {
         </div>
       )}
 
-      {selectedTask && <TaskModal task={selectedTask} onClose={() => setSelectedTask(null)} clientId={clientId} section={section} />}
+      {selectedTask && <TaskModal task={selectedTask} onClose={() => setSelectedTaskId(null)} clientId={clientId} section={section} />}
       {addOpen && clientId && <AddTaskModal open={addOpen} onClose={() => setAddOpen(false)} clientId={clientId} section={section} />}
     </div>
   );
